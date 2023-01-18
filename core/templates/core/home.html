@@ -24,11 +24,25 @@
       crossorigin="anonymous"></script>
     <title>Document</title>
 
-    <!-- <style>
+    <style>
+      #seAD{
+        height: 20rem;
+        width: auto;
+        padding: 0% 5%;
+        background-color: black;
+      }
       #advert{
         color: brown;
       }
-    </style> -->
+      #advert .card{
+        height: 18rem;
+        width: auto;
+      }
+      #adimo{
+        height: 18rem;
+        width: 100%;
+      }
+    </style>
 
   </head>
   <body>
@@ -137,21 +151,23 @@
           {%endif%}
         </div>
       </section>
-      <section >
-        {% for a in adverts %}
-        <a href="{{a.url}}">
-        <div id="advert" class="card " >
-          
-          <img src="{{ a.image.url }}" class="card-img" alt="...">
-          
-          <div class="card-img-overlay">
-            <h5 class="card-title">{{a.title}}</h5>
-            <p class="card-text">{{a.desc}}</p>
-            <p class="card-text"><small>{{a.name}}</small></p>
+      <section id="seAD">
+        <div id="shAD">
+
+          <div id="advert" class="card container" >
+            <a href="{{a.url}}">
+            
+            <img id="adimo" src="{{ a.image.url }}" class="card-img" alt="...">
+            
+          </a>
+            <div class="card-img-overlay">
+              <h5 class="card-title">{{a.title}}</h5>
+              <p class="card-text">{{a.desc}}</p>
+              <p class="card-text"><small>{{a.name}}</small></p>
+            </div>
           </div>
         </div>
-        </a>
-        {%endfor%}
+        
       </section>
       <section id="fom">
         <div class="card ">
@@ -174,10 +190,15 @@
 
       <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
       <script>
+        
         $(document).ready( function () {
           $('#ticket').DataTable();
           $('#adv').DataTable();
       } );
+      $('#shAD').add(function(){
+        $('#advert').fadeOut(6000).fadeIn(6000).nextAll;
+        $('#advert').fadeIn(6000);
+      });
        </script>
     </body>
   </html>

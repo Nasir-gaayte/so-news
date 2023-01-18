@@ -9,6 +9,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from docx import Document
 from docx.shared import Inches
+import random
+
 
 # text file 
 
@@ -59,10 +61,14 @@ def text(request, id):
 
 def home(request):
     detail= TicketModel.objects.all()
-    adverts = AdvertModel.objects.all()
+    num = AdvertModel.objects.all().values_list('id',flat=True)
+    print(num)
+    ad =random.choice(num)
+    print(ad)
+    adverts = AdvertModel.objects.get(id=ad)
     return render(request,'core/home.html', {
         'detail':detail,
-        'adverts':adverts,
+        'a':adverts,
         })
 
 
