@@ -25,3 +25,17 @@ class TicketModel(models.Model):
 
     def __str__(self) :
         return self.name + self.cost
+    
+    
+class AdvertModel(models.Model):
+        name = models.CharField(max_length=200, blank=True, null=True)
+        title = models.CharField(max_length=50,blank=True, null=True)
+        image = models.ImageField(blank=True,null=True,upload_to='advert')
+        desc = models.TextField(300, blank=True, null=True)
+        url = models.URLField()
+        
+        
+        
+        def __str__(self):
+            return self.name
+        

@@ -1,7 +1,7 @@
 from django.views import View
-from django.shortcuts import render,redirect
-from .models import TicketModel
-from .forms import TicketForm
+from django.shortcuts import render,redirect, get_object_or_404
+from .models import TicketModel, AdvertModel
+from .forms import TicketForm , AdvertForm
 from django.core.mail import send_mail
 
 
@@ -11,6 +11,24 @@ from docx import Document
 from docx.shared import Inches
 
 # text file 
+
+def add_advert(request):
+    if request.method == "POST":
+       data = request.POST
+       imo = request.FILES.get('image')
+       AdvertModel.objects.get_or_create(
+               name = data['name'],
+               title = data['title'],
+               image =imo,
+               desc = data['desc'],
+               url = data['url'],
+           )
+       return redirect('home')
+    
+    adverts = AdvertModel.objects.all()
+    return render(request,'core/add_advert.html',{
+        'adverts':adverts,
+        })    
 
 
 def text(request, id):
@@ -41,9 +59,10 @@ def text(request, id):
 
 def home(request):
     detail= TicketModel.objects.all()
-    
+    adverts = AdvertModel.objects.all()
     return render(request,'core/home.html', {
         'detail':detail,
+        'adverts':adverts,
         })
 
 
@@ -55,7 +74,6 @@ def tickets_detail(request):
     
 
     for tick in tickets:
-        print(tick.to)
         costs = tick.to 
         global y
         y = ''
@@ -91,31 +109,69 @@ def get_ticket(request):
         form = TicketForm(request.POST)
         if form.is_valid():
             form.save()
+            i =form.cleaned_data.get('to')
             name=form.cleaned_data.get('name')
-            print (name)
+            
             email = form.cleaned_data.get('email')
-            co = TicketModel.objects.all()
-            for c in co:
-                if c.name == name:
-                    o = c.cost
-            print(o)
-            cost = o
+            tickets = TicketModel.objects.all()
+            for tick in tickets:
+                if tick.to == i:
+                        costs = tick.to 
+                        global y
+                        y = ''
+                        if costs == 'bosaso to qardho' :
+                                y ='10'
+                            
+                            
+                        elif costs== 'bosaso to garowe' :
+                                y ='20'
+                                
+                        
+                        elif costs == 'bosaso to galkacyo':
+                                y ='30'
+                            
+                            
+                        elif costs== 'bosaso to lascano':
+                                y ='40'
+                                
+                        else: 
+                            y = None
+                        tick.cost = y
+                        tick.save()
+            
+            print(tick)
+
+            cost = tick.cost
+                
+            
+          
+                
+            print(cost)
+            # co = TicketModel.objects.all()
+            
+            # for c in co:
+            #     if c.name == name:
+                    
+            #         print(c.name)
+            #         o=(c.cost)
+            # print(o)
+            # cost = o
             send_mail(
-                f'mudane/murow {name}',
-                f"Fdlan kidir A/C 50000 qimaha ticket ka oo dhan {cost}$" ,
-                'doon1wac101@gmail.com',
+                f'mudane/murow {name}  ',
+                f"Fdlan kudir A/C 50000  qimaha ticket ka oo ah {cost}$   mahadsanid.." ,
+                'bus1ticket101@gmail.com',
                 [email],
             )
             send_mail(
                 f"name  {name} want ticket form  {form.cleaned_data.get('to')}",
                 f"pay {cost} $ on {form.cleaned_data.get('date')}",
                 email,
-                ['doon1wac101@gmail.com'],
+                ['bus1ticket101@gmail.com'],
             )
             
             
 
-            return redirect('details')
+            return redirect('home')
     form = TicketForm()
     return render(request,'core/add_ticket.html',{'form':form,
                                                    } )        

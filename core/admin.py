@@ -1,6 +1,6 @@
 from multiprocessing.spawn import import_main_path
 from django.contrib import admin
-from .models import TicketModel
+from .models import TicketModel, AdvertModel
 # Register your models here.
 
 
@@ -10,3 +10,4 @@ class TicketAdmin(admin.ModelAdmin):
 
 
 admin.site.register(TicketModel, TicketAdmin)
+admin.site.register(AdvertModel)
