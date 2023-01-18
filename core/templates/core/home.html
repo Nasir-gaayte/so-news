@@ -32,7 +32,7 @@
         background-color: black;
       }
       #advert{
-        color: brown;
+        color: rgb(238, 255, 5);
       }
       #advert .card{
         height: 18rem;
@@ -161,7 +161,7 @@
             
           </a>
             <div class="card-img-overlay">
-              <h5 class="card-title">{{a.title}}</h5>
+              <h1 class="card-title">{{a.title}}</h1>
               <p class="card-text">{{a.desc}}</p>
               <p class="card-text"><small>{{a.name}}</small></p>
             </div>
@@ -194,11 +194,15 @@
         $(document).ready( function () {
           $('#ticket').DataTable();
           $('#adv').DataTable();
+          
       } );
       $('#shAD').add(function(){
-        $('#advert').fadeOut(6000).fadeIn(6000).nextAll;
-        $('#advert').fadeIn(6000);
+        $('#advert').fadeOut(3000).fadeIn(3000).nextAll;
+        $('#advert').fadeOut(3000).fadeIn(3000).nextAll;
+        $('#advert').fadeOut(1000).fadeIn(1000).nextAll;
+        $('#advert').fadeOut(2000).fadeIn(6000);
       });
        </script>
+      
     </body>
   </html>
