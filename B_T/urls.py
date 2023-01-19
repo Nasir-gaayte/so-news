@@ -19,9 +19,13 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 
+from django.views.static import serve
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('core.urls')),
     path('',include('acc.urls')),
     path('api-auth/', include('rest_framework.urls')),
+    path('media/(?P<path>.*)', serve,{'document_root':       settings.MEDIA_ROOT}), 
+    path('static/(?P<path>.*)', serve,{'document_root': settings.STATIC_ROOT}),
 ]+static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
